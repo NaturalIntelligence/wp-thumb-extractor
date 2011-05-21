@@ -38,27 +38,28 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	if($zc != '')
 		$zc='zc='. $zc . '&';
 	if($percent != '')
-		$percent='percent='. $percent . '&';	
+		$percent='percent='. $percent . '&';
 	if($img !='')
-		return WP_PLUGIN_URL . "/amtythumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
+		return WP_PLUGIN_URL . "/amtyThumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
 	else //Post has no image
 			return $img;
 
 }//function end
 
 function amty_take_first_img_by_id($id) {
-	$temp = $wp_query;  // assign orginal query to temp variable for later use   
+	$temp = $wp_query;  // assign orginal query to temp variable for later use
 	$wp_query = null;
         global $wpdb;
 	  $img='';
 	  $attach_img='';
+	  $uploaded_img = '';
 
         //reading from database
         /*$image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title
         FROM $wpdb->posts
         WHERE post_parent = $id
         ORDER BY ID ASC");*/
-        
+
         $image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title
 	FROM wp_posts
 	WHERE id = $id");
@@ -84,10 +85,42 @@ if($match_count == 0){
 
 	  if( $img == '') $img = $match_array[1][0];
 
+	  $attach_img = amty_get_firstimage($output->guid);
+
+	  $first_image_data = array ($image_data[0]);
+	  foreach($first_image_data as $output) {
+	  if (substr($output->post_mime_type, 0, 5) == 'image'){
+	  		$uploaded_img = $output->guid;
+	  		break;
+	  	}
+	  }
+
 $wp_query = $temp;
-return $img;
+if( $img != '')	return $img;
+if( $attach_img != '')	return $attach_img;
+if( $uploaded_img != '')	return $uploaded_img;
+return '';
 }
 
 
+function amty_get_firstimage($post_id='', $size='thumbnail') {
+	 $id = (int) $post_id;
+	 $args = array(
+	  'post_type' => 'attachment',
+	  'post_mime_type' => 'image',
+	  'numberposts' => 1,
+	  'order' => 'ASC',
+	  'orderby' => 'menu_order ID',
+	  'post_status' => null,
+	  'post_parent' => $id
+	 );
+	 $attachments = get_posts($args);
+	 if ($attachments) {
+	   $img = wp_get_attachment_image_src($attachments[0]->ID, $size);
+	   return $img[0];
+	 }else{
+	   return '';
+	 }
+}
 
 ?>

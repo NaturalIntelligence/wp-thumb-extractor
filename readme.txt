@@ -3,8 +3,8 @@ Contributors: Amit Gpta
 Donate link: http://article-stack.com/
 Tags: thumbnail, amty, image, first-image,
 Requires at least: 2.5
-Tested up to: 3.1
-Stable tag: 1.0
+Tested up to: 3.1.2
+Stable tag: 1.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -12,6 +12,7 @@ Fetch first image of a post and Resize it. Otherwise resize an image.
 
 This plugin lets you fetch first image of any post. It is fully configurable. You can crop an image or resize on the basis of its height, or width, or both.
 
+Ataached/uploaded images might not be displayed in case of localhost.
 
 Features over other plugins:
 
@@ -59,3 +60,13 @@ For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
 
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
+== Changelog ==
+
+
+= 1.1 =
+* missing code is added to fetch uploaded and attached images.
+
+== Upgrade Notice ==
+
+= 1.1 =
+* missing code is added to fetch uploaded and attached images.
