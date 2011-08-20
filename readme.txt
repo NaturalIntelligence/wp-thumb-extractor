@@ -1,10 +1,10 @@
 === amtyThumb ===
 Contributors: Amit Gpta
 Donate link: http://article-stack.com/
-Tags: thumbnail, amty, image, first-image,
+Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.1.2
-Stable tag: 1.1
+Stable tag: 1.2
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -20,7 +20,12 @@ Features over other plugins:
 1. Can extract an image which is either on same server or on remote server
 2. Can extract attached images
 3. If an image is deleted from the post it automatically fetch 2nd image.
-4. It can fetch first image from youtube video as well.
+4. It can fetch first image from the post even if it is a video from 
+	a) Youtube
+	b) Vimeo
+	c) Dailymotion
+	d) Metacafe
+	e) Veoh
 5. You can use it to resize/crop an image instead of fetching it from any post.
 
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
@@ -62,11 +67,18 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 1.2 =
+* Performance Improvement.
+* Support for more video services like dailymotion,metacafe,veoh,vimeo etc.
 
 = 1.1 =
 * missing code is added to fetch uploaded and attached images.
 
 == Upgrade Notice ==
+
+= 1.2 =
+* Performance Improvement.
+* Support for more video services like dailymotion,metacafe,veoh,vimeo etc.
 
 = 1.1 =
 * missing code is added to fetch uploaded and attached images.

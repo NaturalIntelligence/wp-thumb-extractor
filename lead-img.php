@@ -19,31 +19,48 @@ Resize to 50 pixels width OR 100 pixels tall, whichever resulting image is small
 imgsize.php?w=50&h=100&constrain=1&img=path/to/image.jpg
 */
 
+include ("videothumb.php");
 
-function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '') {
-	$first_image_data = array ($image_data[0]);
-	if($img == '')
+function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '',
+						$img_url_only = 'y',$show_default = 'y',$default_img = '') {	
+	if($img == ''){
 		if($post_id == ''){
 			global $id;
 			$img = amty_take_first_img_by_id($id);
 		}
 		else
 			$img = amty_take_first_img_by_id($post_id);
-	if($constrain != '')
-		$constrain='constrain='. $constrain . '&';
-	if($h != '')
-		$h='h='. $h . '&';
-	if($w != '')
-		$w='w='. $w . '&';
-	if($zc != '')
-		$zc='zc='. $zc . '&';
-	if($percent != '')
-		$percent='percent='. $percent . '&';
-	if($img !='')
-		return WP_PLUGIN_URL . "/amtyThumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
-	else //Post has no image
-			return $img;
-
+	}
+		
+	if($img =='' && $show_default != 'y'){
+		$img_url = $img;
+	}else{
+		if($img =='' && $show_default == 'y'){
+			if($default_img != '')
+				$img = $default_img;
+			else
+				$img = WP_PLUGIN_URL . "/amtyThumb/amtytextthumb.gif";
+		}
+		if($constrain != '')
+			$constrain='constrain='. $constrain . '&';
+		if($h != '')
+			$h='h='. $h . '&';
+		if($w != '')
+			$w='w='. $w . '&';
+		if($zc != '')
+			$zc='zc='. $zc . '&';
+		if($percent != '')
+			$percent='percent='. $percent . '&';
+		$img_url = WP_PLUGIN_URL . "/amtyThumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
+	}
+		
+	if($img_url_only == "y"){
+		$out = $img_url;
+	}else{
+		$out = '<img src="'.$img_url.'" />';
+	}
+	//echo $out;
+	return $out;
 }//function end
 
 function amty_take_first_img_by_id($id) {
@@ -54,32 +71,19 @@ function amty_take_first_img_by_id($id) {
 	  $attach_img='';
 	  $uploaded_img = '';
 
-        //reading from database
-        /*$image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title
-        FROM $wpdb->posts
-        WHERE post_parent = $id
-        ORDER BY ID ASC");*/
-
-        $image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title
-	FROM wp_posts
-	WHERE id = $id");
-
-	  	  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
+      $image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title FROM wp_posts WHERE id = $id");
+	  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/?>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
 	  if($match_count == 0){
 
-		  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?>/", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
+		  /*$match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?>/", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
 		  if($match_count == 0){
 			  $match_count = preg_match_all("/<img[^>]+>/i", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
 	  		  if($match_count == 0)
-				  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
-if($match_count == 0){
-			  		  $match_count = preg_match_all("/youtube.com\/watch\?v=(\S*)/", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
-					  if($match_count == 0) $match_count = preg_match_all("/youtube.com\/watch\?v=(\S*)/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
-					  if($match_count != 0)
-						  $img = 'http://img.youtube.com/vi/' . $match_array[1][0] . '/0.jpg';
-
-}
-	  	}
+					$match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
+					if($match_count == 0){*/
+					  $img = thumb($image_data[0]->post_content);
+					/*}
+	  	}*/
 	  }
 
 
@@ -102,7 +106,7 @@ if( $uploaded_img != '')	return $uploaded_img;
 return '';
 }
 
-
+//get First attached image
 function amty_get_firstimage($post_id='', $size='thumbnail') {
 	 $id = (int) $post_id;
 	 $args = array(
