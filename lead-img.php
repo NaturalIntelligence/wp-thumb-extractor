@@ -39,7 +39,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 			if($default_img != '')
 				$img = $default_img;
 			else
-				$img = WP_PLUGIN_URL . "/amtyThumb/amtytextthumb.gif";
+				$img = WP_PLUGIN_URL . "/amtythumb/amtytextthumb.gif";
 		}
 		if($constrain != '')
 			$constrain='constrain='. $constrain . '&';
@@ -51,7 +51,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 			$zc='zc='. $zc . '&';
 		if($percent != '')
 			$percent='percent='. $percent . '&';
-		$img_url = WP_PLUGIN_URL . "/amtyThumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
+		$img_url = WP_PLUGIN_URL . "/amtythumb/scripts/imgsize.php?".$zc."". $percent."".$constrain."" . $w ."" . $h ."&img=" . $img ;
 	}
 		
 	if($img_url_only == "y"){

@@ -4,7 +4,7 @@ Donate link: http://article-stack.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.1.2
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -67,6 +67,9 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 1.2.1 =
+* 404 error resolved
+
 = 1.2 =
 * Performance Improvement.
 * Support for more video services like dailymotion,metacafe,veoh,vimeo etc.
@@ -75,6 +78,9 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 * missing code is added to fetch uploaded and attached images.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+* 404 error resolved
 
 = 1.2 =
 * Performance Improvement.
