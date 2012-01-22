@@ -1,10 +1,10 @@
 === amtyThumb ===
-Contributors: Amit Gpta
-Donate link: http://article-stack.com/
+Contributors: Amit Gupta
+Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
-Tested up to: 3.1.2
-Stable tag: 1.2.1
+Tested up to: 3.2
+Stable tag: 2.0
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -16,20 +16,18 @@ Ataached/uploaded images might not be displayed in case of localhost.
 
 Features over other plugins:
 
-
 1. Can extract an image which is either on same server or on remote server
 2. Can extract attached images
-3. If an image is deleted from the post it automatically fetch 2nd image.
-4. It can fetch first image from the post even if it is a video from 
+3. It can fetch first image from the post even if it is a video from 
 	a) Youtube
 	b) Vimeo
 	c) Dailymotion
 	d) Metacafe
 	e) Veoh
-5. You can use it to resize/crop an image instead of fetching it from any post.
+4. You can use it to resize/crop an image instead of fetching it from any post.
 
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
-			[THZ](http://thinkzarahatke.com/ "amty thumb ")
+			[TZH](http://thinkzarahatke.com/ "amty thumb ")
 			
 
 == Installation ==
@@ -48,9 +46,6 @@ To fetch image from specific post. Resize to half.
 	[amtyThumbOnly percent=50 post_id=282]
 To fetch image from current post. Resize by its width.(adjust height automatically)
 	[amtyThumbOnly width=50]
-Resize an image instead of fetching it from any post.
-	[amtyThumbOnly image_url=http://thinkzarahatke.com/testingimage.jpg percent=50]
-
 
 For any doubt or query visit [article-stack](http://article-stack.com/ "amty thumb") or 
 
@@ -67,6 +62,12 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 2.0 =
+* security - image resizing utility can be called internally using post id instead of independent url. So noone else can use your bandwidth.
+* caching - It caches first image url of all posts and tagged with post itself to save runtime processing.
+* filesystem - Now it caches resized images on your site itself. It saves repeated on the fly resizing thus high CPU and memory.
+
+
 = 1.2.1 =
 * 404 error resolved
 
@@ -79,12 +80,11 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 
 == Upgrade Notice ==
 
+
+= 2.0 =
+* security - image resizing utility can be called internally using post id instead of independent url. So noone else can use your bandwidth.
+* caching - It caches first image url of all posts and tagged with post itself to save runtime processing.
+* filesystem - Now it caches resized images on your site itself. It saves repeated on the fly resizing thus high CPU and memory.
+
 = 1.2.1 =
 * 404 error resolved
-
-= 1.2 =
-* Performance Improvement.
-* Support for more video services like dailymotion,metacafe,veoh,vimeo etc.
-
-= 1.1 =
-* missing code is added to fetch uploaded and attached images.
