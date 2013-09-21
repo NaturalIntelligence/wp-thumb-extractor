@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 2.1.3
+Stable tag: 3.0.0
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -89,6 +89,11 @@ For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
+
+= 3.0.0 =
+* performance improvement
+* You can see broken cached images from amty Thumb admin page.
+* first image will be cached whenever the page gets published.
 
 = 2.1.2 =
 * added missed files

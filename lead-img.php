@@ -4,9 +4,15 @@ include ("videothumb.php");
 include ("supportingFunction.php");
 include ("cacheFunction.php");
 
+/*
+It fetch first image from the post
+save it to cache. only if post_id is given.
+and return resized image url or <img>
+*/
 function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '',$img_url_only = 'y',$default_img = '') {
 	
 	$pid=-1;
+	$img_uri='';
 	if($img == ''){
 		if($post_id == ''){
 			global $id;
@@ -15,27 +21,32 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 		else{
 			$pid=$post_id;
 		}
+		//put valid or default image into cache
 		amty_putIntoImageCache($pid,0,$default_img);
 		$img = get_post_meta($pid,'amtyThumb',true);
-	}
-	if($img != ''){
-		$img_uri = WP_PLUGIN_DIR . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
-		$img_url = WP_PLUGIN_URL . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
-		if(!file_exists($img_uri)) {
-			//resize and save it with $img_uri name
-			if(isImage($img)){//to avoid invalid path or 404 errors
-				@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
-			}else{
-				$img_url = $default_img;
-			}
-		}
-			
-		if($img_url_only == "y"){
-			$out = $img_url;
-		}else{
-			$out = '<img src="'.$img_url.'" />';
+	}else{
+		if(isImage($img)){//to avoid invalid path or 404 errors
+			$img = WP_PLUGIN_URL . "/amtythumb/invalid.gif";
 		}
 	}
+	
+	//To save image on disk
+	$img_uri = WP_PLUGIN_DIR . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
+	
+	if($pid == -1 || !file_exists($img_uri)) { //for specific image resizging, caching is not required. it'll be saved with -1 pid
+		//resize and save it with $img_uri name
+		@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
+	}
+	
+	//Actual image url
+	$resized_img = WP_PLUGIN_URL . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
+	
+	if($img_url_only == "y"){
+		$out = $resized_img;
+	}else{
+		$out = '<img src="'.$resized_img.'" />';
+	}
+	
 	return $out;
 }//function end
 
@@ -139,12 +150,16 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 		
 		// Output resized image
 		//@ImageJPEG ($thumb);
+		
 		$quality = 100;
-		if($w < 100 && $h <100 ){
+		//Uncomment below code for better performance
+		/*
+		if($w < 100 && $h < 100 ){
 			$quality = 50;
-		}elseif($w < 200 && $h <200 ){
+		}elseif($w < 200 && $h < 200 ){
 			$quality = 80;
 		}
+		*/
 		//saving to a file
 		if($thumb != '')
 			imagejpeg($thumb,$imgPath , $quality);

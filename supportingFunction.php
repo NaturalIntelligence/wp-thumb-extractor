@@ -22,36 +22,39 @@ function amty_get_firstimage($post_id='', $size='thumbnail') {
 }
 
 function amty_take_first_img_by_id($id) {
+		$img='';
+		$attach_img='';
+		$uploaded_img = '';
+
 		$temp = $wp_query;  // assign orginal query to temp variable for later use
 		$wp_query = null;
-			global $wpdb;
-		  $img='';
-		  $attach_img='';
-		  $uploaded_img = '';
+		global $wpdb;
+		$image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title FROM wp_posts WHERE id = $id");
+		$wp_query = $temp;
+		  
+		$match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/?>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
+		
+		if($match_count == 0){
+			$img = thumb($image_data[0]->post_content);
+		}
 
-		  $image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title FROM wp_posts WHERE id = $id");
-		  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/?>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
-		  if($match_count == 0){
-				$img = thumb($image_data[0]->post_content);
-		  }
+		if( $img == '') $img = $match_array[1][0];//doubt
+		
+		if( $img != '')	return $img;
+		
+		$attach_img = amty_get_firstimage($output->guid);
+		if( $attach_img != '')	return $attach_img;
 
-		  if( $img == '') $img = $match_array[1][0];
-
-		  $attach_img = amty_get_firstimage($output->guid);
-
-		  $first_image_data = array ($image_data[0]);
-		  foreach($first_image_data as $output) {
-		  if (substr($output->post_mime_type, 0, 5) == 'image'){
+		$first_image_data = array ($image_data[0]);
+		foreach($first_image_data as $output) {
+		if (substr($output->post_mime_type, 0, 5) == 'image'){
 				$uploaded_img = $output->guid;
 				break;
 			}
-		  }
+		}
 
-	$wp_query = $temp;
-	if( $img != '')	return $img;
-	if( $attach_img != '')	return $attach_img;
-	if( $uploaded_img != '')	return $uploaded_img;
-	return '';
+		if( $uploaded_img != '')	return $uploaded_img;
+		return '';
 }
 
 function isImage($img){ 

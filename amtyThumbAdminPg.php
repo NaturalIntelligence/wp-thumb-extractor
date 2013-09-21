@@ -69,7 +69,6 @@
 	<br />
 	<?php 
 		if($_POST['showthumb'] == 'Y') {
-			
 			amty_displayThumb($_POST['pid']);
 		}
 	?>
@@ -111,6 +110,22 @@
 	?>
 </div>
 </div>
+<div style="clear:both;"></div>
+<hr />
+<br />
+<form name="amtyThumbReport_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+	<input type="hidden" name="reportBroken" value="Y" />
+	<center><p><input type="submit" name="reportBrokenSubmit" value="Report Broken Cached Images" /></p></center>
+</form>
+</div>
+<div>
+	<?php 
+		if($_POST['reportBroken'] == 'Y') {
+			reportBrokenImage();
+		}
+	?>
+</div>
+
 <div style="clear:both;"></div>
 <hr />
 </div>

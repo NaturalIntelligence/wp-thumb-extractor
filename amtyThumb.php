@@ -5,7 +5,7 @@ Plugin URI: http://article-stack.com/
 Description: This plugin fetch first image from your post even if it is vedio.
 
 Author: Amit Gupta
-Version: 2.1.3
+Version: 3.0.0
 Author URI: http://article-stack.com/
 */
 
@@ -42,5 +42,13 @@ function amtyThumb_admin_actions() {
 }
 
 add_action('admin_menu', 'amtyThumb_admin_actions');
+
+//Fetch thumbnail when post get published
+function push_notification($post_id) 
+{ 
+  amty_putIntoImageCache($post_id); 
+}
+
+add_action('publish_post','update_thumb');
 
 ?>
