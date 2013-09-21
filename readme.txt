@@ -3,8 +3,8 @@ Contributors: Amit Gupta
 Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
-Tested up to: 3.2
-Stable tag: 2.0
+Tested up to: 3.5
+Stable tag: 2.0.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -49,6 +49,32 @@ To fetch image from current post. Resize by its width.(adjust height automatical
 
 For any doubt or query visit [article-stack](http://article-stack.com/ "amty thumb") or 
 
+Usage examples:
+
+Importatnt:
+Width and Height both are supposed to be provided
+if constrain is 0 then image will be streched, if it is 1 then it'll be resized in ratio
+
+Resize an image to 25 x 25; default zoom
+amty_lead_img(25,25,'','path/to/image.jpg');
+
+Resize an image to 25 x 25, cropping
+amty_lead_img(25,25,'','path/to/image.jpg','',1);
+
+Resize an image to 50% the size
+amty_lead_img('','','','path/to/image.jpg',50);
+
+Resize an image to 50 pixels wide and autocompute the height
+amty_lead_img(50,'','','path/to/image.jpg');
+
+Resize an image to 100 pixels tall and autocompute the width
+amty_lead_img('',50,'','path/to/image.jpg');
+
+Resize to 50 pixels width OR 100 pixels tall, whichever resulting image is smaller
+amty_lead_img(50,100,1,'path/to/image.jpg');
+
+Resize first image of current post
+amty_lead_img($w,$h,1,'','',0);
 
 == Frequently Asked Questions ==
 
@@ -61,6 +87,9 @@ For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
+
+= 2.0.1 =
+* just modified the docs for end user to tell how to use this plugin
 
 = 2.0 =
 * security - image resizing utility can be called internally using post id instead of independent url. So noone else can use your bandwidth.

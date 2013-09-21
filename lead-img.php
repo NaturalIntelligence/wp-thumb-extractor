@@ -1,24 +1,5 @@
 <?php
 
-/*
-Usage examples:
-
-Resize an image to 25 x 25
-imgsize.php?w=25&h=25&img=path/to/image.jpg
-
-Resize an image to 50% the size
-imgsize.php?percent=50&img=path/to/image.jpg
-
-Resize an image to 50 pixels wide and autocompute the height
-imgsize.php?w=50&img=path/to/image.jpg
-
-Resize an image to 100 pixels tall and autocompute the width
-imgsize.php?h=100&img=path/to/image.jpg
-
-Resize to 50 pixels width OR 100 pixels tall, whichever resulting image is smaller
-imgsize.php?w=50&h=100&constrain=1&img=path/to/image.jpg
-*/
-
 include ("videothumb.php");
 
 function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '',$img_url_only = 'y',$default_img = '') {
