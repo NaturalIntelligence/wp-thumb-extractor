@@ -85,9 +85,13 @@
 	Mode : <select name="mode"><option value="0">Image URL </option><option value="1">Post Id </option></select>
 	Image URL/Post ID : <input type="text" name="post_id" value="<?php echo $_POST['post_id'];?>" style="width:250px"/>
 	<br />
+	If you don't specify percent then specify width and height both.
+	<br />
 	Percent (only numeric) : <input type="text" name="percent" value="<?php echo $_POST['percent'];?>" style="width:50px"/> |
 	Width : <input type="text" name="width" value="<?php echo $_POST['width'];?>" style="width:50px"/>
 	Height : <input type="text" name="height" value="<?php echo $_POST['height'];?>" style="width:50px"/>
+	<br />
+	if you specify Constrain as 0, resized image will be stretched. To maintain the ratio keep it 1.
 	<br />
 	Zoom/Crop :  <select name="zc"><option value="0">0</option><option value="1">1</option></select>
 	Constrain : <select name="cons"><option value="0">0</option><option value="1">1</option></select>
