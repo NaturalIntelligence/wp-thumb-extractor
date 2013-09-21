@@ -1,6 +1,8 @@
 <?php
 
 include ("videothumb.php");
+include ("supportingFunction.php");
+include ("cacheFunction.php");
 
 function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '',$img_url_only = 'y',$default_img = '') {
 	
@@ -20,7 +22,12 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 		$img_uri = WP_PLUGIN_DIR . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
 		$img_url = WP_PLUGIN_URL . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
 		if(!file_exists($img_uri)) {
-			@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
+			//resize and save it with $img_uri name
+			if(isImage($img)){//to avoid invalid path or 404 errors
+				@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
+			}else{
+				$img_url = $default_img;
+			}
 		}
 			
 		if($img_url_only == "y"){
@@ -32,69 +39,6 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	return $out;
 }//function end
 
-function amty_take_first_img_by_id($id) {
-		$temp = $wp_query;  // assign orginal query to temp variable for later use
-		$wp_query = null;
-			global $wpdb;
-		  $img='';
-		  $attach_img='';
-		  $uploaded_img = '';
-
-		  $image_data = $wpdb->get_results("SELECT guid, post_content, post_mime_type, post_title FROM wp_posts WHERE id = $id");
-		  $match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/?>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
-		  if($match_count == 0){
-
-			  /*$match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?>/", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
-			  if($match_count == 0){
-				  $match_count = preg_match_all("/<img[^>]+>/i", $image_data[1]->post_content, $match_array, PREG_PATTERN_ORDER);
-				  if($match_count == 0)
-						$match_count = preg_match_all("/<img[^']*?src=\"([^']*?)\"[^']*?\/>/", $image_data[0]->post_content, $match_array, PREG_PATTERN_ORDER);
-						if($match_count == 0){*/
-						  $img = thumb($image_data[0]->post_content);
-						/*}
-			}*/
-		  }
-
-
-		  if( $img == '') $img = $match_array[1][0];
-
-		  $attach_img = amty_get_firstimage($output->guid);
-
-		  $first_image_data = array ($image_data[0]);
-		  foreach($first_image_data as $output) {
-		  if (substr($output->post_mime_type, 0, 5) == 'image'){
-				$uploaded_img = $output->guid;
-				break;
-			}
-		  }
-
-	$wp_query = $temp;
-	if( $img != '')	return $img;
-	if( $attach_img != '')	return $attach_img;
-	if( $uploaded_img != '')	return $uploaded_img;
-	return '';
-}
-
-//get First attached image
-function amty_get_firstimage($post_id='', $size='thumbnail') {
-	 $id = (int) $post_id;
-	 $args = array(
-	  'post_type' => 'attachment',
-	  'post_mime_type' => 'image',
-	  'numberposts' => 1,
-	  'order' => 'ASC',
-	  'orderby' => 'menu_order ID',
-	  'post_status' => null,
-	  'post_parent' => $id
-	 );
-	 $attachments = get_posts($args);
-	 if ($attachments) {
-	   $img = wp_get_attachment_image_src($attachments[0]->ID, $size);
-	   return $img[0];
-	 }else{
-	   return '';
-	 }
-}
 
 function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 	// get image size of img
@@ -208,151 +152,5 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 		imagedestroy($thumb);
 	}
 }
-
-//empty image cache and all thumbnails from file system
-function amty_clearImageCacheSoft(){
-	$query = new WP_Query( 'posts_per_page=-1' );
-	while ( $query->have_posts() ) : $query->the_post();
-		delete_post_meta(get_the_ID(), 'amtyThumb');
-	endwhile;
-	wp_reset_postdata();
-}
-
-function amty_clearImageCacheHard(){
-	$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-	if($handle=opendir($dir)){
-		while ( ($file = readdir($handle)) !==false) {
-			@unlink($dir.'/'.$file);
-		}
-		closedir($handle);
-	}
-}
-
-function amty_clearImageCacheFull(){
-	amty_clearImageCacheSoft();
-	amty_clearImageCacheHard();
-}
-
-
-//delete an image from cache and its all thumbnails from file system
-function amty_deletePostFromCache($postId){
-	if(get_post_meta($postId,'amtyThumb',true) != '' ){
-		$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-		if($handle=opendir($dir)){
-			while ( ($file = readdir($handle)) !==false) {
-				if(preg_match('/^'. $postId .'_.*\.jpg/', $file)){
-					@unlink($dir.'/'.$file);
-				}
-			}
-			closedir($handle);
-		}
-		delete_post_meta($postId, 'amtyThumb');
-	}
-}
-//put 1st image of the post into cache if does not present.
-//if force != 0 put 1st image of the post into cache even if presents.
-function amty_putIntoImageCache($postId,$force=0,$default_img=''){
-	$metaVal = get_post_meta($postId,'amtyThumb',true);
-	if($force == 0 && $metaVal != ''){
-	}else{
-		$img = amty_take_first_img_by_id($postId);
-		if($img ==''){
-			if($default_img != ''){
-				$img = $default_img;
-			}
-			else{
-				$img = WP_PLUGIN_URL . "/amtythumb/amtytextthumb.gif";
-			}
-		}
-		update_post_meta($postId,'amtyThumb',$img);
-	}
-}
-
-//cache images for uncached posts
-function amty_populateCache($force=0){
-	$query = new WP_Query( 'posts_per_page=-1' );
-	while ( $query->have_posts() ) : $query->the_post();
-		amty_putIntoImageCache(get_the_ID(),$force);
-	endwhile;
-	wp_reset_postdata();
-}
-
-//empty current acche and repopulate it for all posts
-function amty_repopulateImageCache(){
-	amty_populateCache(1);
-}
-
-function amty_getImageCacheCount(){
-	$cnt=0;
-	$query = new WP_Query( 'posts_per_page=-1' );
-	while ( $query->have_posts() ) : $query->the_post();
-		$metaVal = get_post_meta(get_the_ID(),'amtyThumb',true);
-		if($metaVal != ''){
-			$cnt= $cnt + 1;
-		}
-	endwhile;
-	wp_reset_postdata();
-	return $cnt;
-}
-
-function amty_displayThumb($postid){
-	$metaVal = get_post_meta($postid,'amtyThumb',true);
-	echo '<div style="float:left;width:50%;">';
-	if($metaVal != ''){
-		echo "<br />First cached image from post";
-		echo '<br /><a href="' . $metaVal . '" class="thickbox"><img src="'.$metaVal.'" width="300" alt="Cache the image before displaying the thumbnail" /></a><br />';
-	}
-	echo '</div>';
-	echo '<div style="float:left;width:50%;">';
-	$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-	$url =  WP_PLUGIN_URL . "/amtythumb/cache";
-	echo "<br />Image path on server : " . $dir;
-	echo "<br />Image url : " . $url;
-	echo "<br />Images cached on File system";
-	if($handle=opendir($dir)){
-		while ( ($file = readdir($handle)) !==false) {
-			if(preg_match('/^'. $postid .'_.*\.jpg/', $file)){
-				echo '<br /><center><a href="' . $url.'/'.$file . '" class="thickbox"><img src="'.$url.'/'.$file.'" width="300" alt="Cache the image before displaying the thumbnail" /></a><br />'.$file.'</center><br />';
-			}
-		}
-		closedir($handle);
-	}
-	echo '</div><div style="clear:both;"></div>';
-}
-
-function amty_testPlugin($imgurl,$pid,$w,$h,$percent,$constrain,$zc){
-	
-	if($pid != ''){
-		$starttime = time();
-		$img = amty_take_first_img_by_id($pid);
-		$endtime = time();
-		echo "<br />Time to extract image from post: " . ($endtime - $starttime);
-	}elseif($imgurl != ''){
-		$img = $imgurl;
-	}
-	//echo $img;
-	$img_uri = WP_PLUGIN_DIR . "/amtythumb/testimage.jpg";
-	$img_url = WP_PLUGIN_URL . "/amtythumb/testimage.jpg";
-	//echo $img_uri;
-	$starttime = time();
-	$endtime = time();
-	@unlink($img_uri);
-	@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
-	echo "<br />Time to resize image: " . ($endtime - $starttime);
-	
-	echo '<br />Original Image<br />';
-	echo '<img src="'.$img.'" />';
-	echo '<br />Resized Image<br />';
-	echo '<img src="'.$img_url.'" />';
-}
-function amtyThumb_admin() {
-	include('amtyThumbAdminPg.php');
-}
-
-function amtyThumb_admin_actions() {
-    add_options_page("amtyThumb Options", "amtyThumb Options", "activate_plugins", "amtyThumbOptions", "amtyThumb_admin");
-}
-
-add_action('admin_menu', 'amtyThumb_admin_actions');
 
 ?>

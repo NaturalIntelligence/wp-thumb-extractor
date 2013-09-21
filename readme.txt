@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 2.0.1
+Stable tag: 2.1.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -29,6 +29,8 @@ Features over other plugins:
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[TZH](http://thinkzarahatke.com/ "amty thumb ")
 			
+
+Remember to pass default image path.
 
 == Installation ==
 
@@ -88,6 +90,12 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 2.1.1 =
+* fixed a bug when image url is not valid or it is removed. A thumbnail will not be generated.
+
+= 2.0.1 =
+* just modified the docs for end user to tell how to use this plugin
+
 = 2.0.1 =
 * just modified the docs for end user to tell how to use this plugin
 
@@ -109,6 +117,11 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 
 == Upgrade Notice ==
 
+= 2.1.1 =
+* fixed a bug when image url is not valid or it is removed. A thumbnail will not be generated.
+
+= 2.0.1 =
+* just modified the docs for end user to tell how to use this plugin
 
 = 2.0 =
 * security - image resizing utility can be called internally using post id instead of independent url. So noone else can use your bandwidth.
