@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -116,6 +116,12 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 * missing code is added to fetch uploaded and attached images.
 
 == Upgrade Notice ==
+
+= 2.1.3 =
+* Image quality : 50% for 100x100px thumbnail, 80% for 200x200px thumbnails, and 100% for bigger than 200px.
+
+= 2.1.2 =
+* added missed files
 
 = 2.1.1 =
 * fixed a bug when image url is not valid or it is removed. A thumbnail will not be generated.

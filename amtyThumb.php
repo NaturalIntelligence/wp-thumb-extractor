@@ -5,7 +5,7 @@ Plugin URI: http://article-stack.com/
 Description: This plugin fetch first image from your post even if it is vedio.
 
 Author: Amit Gupta
-Version: 2.1.2
+Version: 2.1.3
 Author URI: http://article-stack.com/
 */
 

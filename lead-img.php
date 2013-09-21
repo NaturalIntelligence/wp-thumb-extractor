@@ -140,9 +140,9 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 		// Output resized image
 		//@ImageJPEG ($thumb);
 		$quality = 100;
-		if($w < 100 || $h <100 ){
+		if($w < 100 && $h <100 ){
 			$quality = 50;
-		}elseif($w < 200 || $h <200 ){
+		}elseif($w < 200 && $h <200 ){
 			$quality = 80;
 		}
 		//saving to a file
