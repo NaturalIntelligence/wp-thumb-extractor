@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -92,6 +92,9 @@ For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
+
+= 3.1.2 =
+* fixed syntax error
 
 = 3.1.1 =
 * direct recache link.

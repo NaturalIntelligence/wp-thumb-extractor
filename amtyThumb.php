@@ -5,7 +5,7 @@ Plugin URI: http://article-stack.com/
 Description: This plugin fetch first image from your post even if it is vedio.
 
 Author: Amit Gupta
-Version: 3.1.1
+Version: 3.1.2
 Author URI: http://article-stack.com/
 */
 
@@ -51,7 +51,7 @@ function push_notification($post_id)
 
 add_action('publish_post','update_thumb');
 
-if(isset($_REQUEST['recache'] != '') && !empty($_REQUEST['recache']) {
+if(isset($_REQUEST['recache']) && !empty($_REQUEST['recache'])) {
 	amty_putIntoImageCache($_REQUEST['recache'],1);
 }
 
