@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 3.0.1
+Stable tag: 3.1.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -78,6 +78,9 @@ amty_lead_img(50,100,1,'path/to/image.jpg');
 Resize first image of current post
 amty_lead_img($w,$h,1,'','',0);
 
+For direct recaching
+use getAmtyThumbRecacheLink($pid) somewhere in your theme.
+
 == Frequently Asked Questions ==
 
 
@@ -89,6 +92,9 @@ For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
 For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
+
+= 3.1.1 =
+* direct recache link.
 
 = 3.0.1 =
 * fixed a bug when it tries to resize invalid or broken images
@@ -123,6 +129,9 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 * missing code is added to fetch uploaded and attached images.
 
 == Upgrade Notice ==
+
+= 3.1.1 =
+* direct recache link.
 
 = 3.0.1 =
 * fixed a bug when it tries to resize invalid or broken images
