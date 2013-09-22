@@ -12,7 +12,7 @@ and return resized image url or <img>
 function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$post_id = '',$img_url_only = 'y',$default_img = '') {
 	
 	$pid=-1;
-	$img_uri='';
+	//$img_uri='';
 	if($img == ''){
 		if($post_id == ''){
 			global $id;

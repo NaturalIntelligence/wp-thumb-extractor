@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -90,6 +90,9 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 3.0.1 =
+* fixed a bug when it tries to resize invalid or broken images
+
 = 3.0.0 =
 * performance improvement
 * You can see broken cached images from amty Thumb admin page.
@@ -109,7 +112,6 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 * caching - It caches first image url of all posts and tagged with post itself to save runtime processing.
 * filesystem - Now it caches resized images on your site itself. It saves repeated on the fly resizing thus high CPU and memory.
 
-
 = 1.2.1 =
 * 404 error resolved
 
@@ -122,22 +124,10 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 
 == Upgrade Notice ==
 
-= 2.1.3 =
-* Image quality : 50% for 100x100px thumbnail, 80% for 200x200px thumbnails, and 100% for bigger than 200px.
+= 3.0.1 =
+* fixed a bug when it tries to resize invalid or broken images
 
-= 2.1.2 =
-* added missed files
-
-= 2.1.1 =
-* fixed a bug when image url is not valid or it is removed. A thumbnail will not be generated.
-
-= 2.0.1 =
-* just modified the docs for end user to tell how to use this plugin
-
-= 2.0 =
-* security - image resizing utility can be called internally using post id instead of independent url. So noone else can use your bandwidth.
-* caching - It caches first image url of all posts and tagged with post itself to save runtime processing.
-* filesystem - Now it caches resized images on your site itself. It saves repeated on the fly resizing thus high CPU and memory.
-
-= 1.2.1 =
-* 404 error resolved
+= 3.0.0 =
+* performance improvement
+* You can see broken cached images from amty Thumb admin page.
+* first image will be cached whenever the page gets published.

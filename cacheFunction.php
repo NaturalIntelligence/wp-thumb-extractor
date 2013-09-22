@@ -48,14 +48,14 @@ function amty_putIntoImageCache($postId,$force=0,$default_img=''){
 		//do nothing
 	}else{
 		$img = amty_take_first_img_by_id($postId);
-		if($img ==''){//image no present
+		if($img ==''){//image not present
 			if($default_img != ''){//custom default image
 				$img = $default_img;
 			}
 			else{
 				$img = WP_PLUGIN_URL . "/amtythumb/amtytextthumb.gif";
 			}
-		}elseif(isImage($img)){//image is not valid
+		}elseif(!isImage($img)){//image is not valid
 			$img = WP_PLUGIN_URL . "/amtythumb/invalid.gif";
 		}
 		update_post_meta($postId,'amtyThumb',$img);
@@ -90,16 +90,14 @@ function amty_getImageCacheCount(){
 }
 
 function reportBrokenImage(){
-		$cnt=0;
 	$query = new WP_Query( 'posts_per_page=-1' );
 	while ( $query->have_posts() ) : $query->the_post();
 		$pid = get_the_ID();
 		$metaVal = get_post_meta($pid,'amtyThumb',true);
-		if(!isImage($metaVal)){
+		if($metaVal != '' && !isImage($metaVal)){
 			echo "PostID :" . $pid . ". Broken imahe URL : " + $metaVal;
 		}
 	endwhile;
 	wp_reset_postdata();
-	return $cnt;
 }
 ?>
