@@ -53,11 +53,11 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 
 function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 	// get image size of img
-	$x = @getimagesize($img);	
+	$imgInfo = @getimagesize($img);	
 	// image width
-	$sw = $x[0];
+	$sw = $imgInfo[0];
 	// image height
-	$sh = $x[1];
+	$sh = $imgInfo[1];
 	if( $sh >0 AND $sw > 0){
 		if ($percent > 0) {
 			// calculate resized height and width if percent is defined
@@ -92,20 +92,32 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 			}
 		}
 	}
-	$im = @ImageCreateFromJPEG ($img) or // Read JPEG Image
-	$im = @ImageCreateFromPNG ($img) or // or PNG Image
-	$im = @ImageCreateFromGIF ($img) or // or GIF Image
-	$im = false; // If image is not JPEG, PNG, or GIF
+	
+	// Create the resized image destination
+	$thumb = @ImageCreateTrueColor ($w, $h);
+		
+	$im = '';
+	if($imgInfo[2] == IMAGETYPE_JPEG){
+		$im = @ImageCreateFromJPEG ($img);
+	}elseif($imgInfo[2] == IMAGETYPE_GIF){
+		$im = @ImageCreateFromGIF ($img);
+	}elseif($imgInfo[2] == IMAGETYPE_PNG){
+		imagealphablending( $thumb, false );
+		imagesavealpha( $thumb, true );
+		$im = @ImageCreateFromPNG ($img);
+	}else{
+		$im = false;
+	}
 
 	if (!$im) {
 		// We get errors from PHP's ImageCreate functions...
 		// So let's echo back the contents of the actual image.
 		readfile ($img);
 	} else {
-		// Create the resized image destination
-		$thumb = @ImageCreateTrueColor ($w, $h);
+		
 		// Copy from image source, resize it, and paste to image destination
 		
+		$src_x = $src_y = 0;
 		if( $zc > 0) {
 			echo "cropping image" . $zc;
 			$new_width = $w;
@@ -120,7 +132,6 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 				$new_height = $height;
 			}
 		
-			$src_x = $src_y = 0;
 			$src_w = $width;
 			$src_h = $height;
 
@@ -140,29 +151,26 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 				$src_y = round( ( $height - ( $height / $cmp_y * $cmp_x ) ) / 2 );
 
 			}
-
-			@ImageCopyResampled( $thumb, $im, 0, 0, $src_x, $src_y, $new_width, $new_height, $src_w, $src_h );
-
-		} else {
-			// copy and resize part of an image with resampling
-			@ImageCopyResampled ($thumb, $im, 0, 0, 0, 0, $w, $h, $sw, $sh);
+			
+			$w = $new_width;
+			$h = $new_height;
+			$sw = $src_w;
+			$sh = $src_h;
 		}
 		
-		// Output resized image
-		//@ImageJPEG ($thumb);
 		
-		$quality = 100;
-		//Uncomment below code for better performance
-		/*
-		if($w < 100 && $h < 100 ){
-			$quality = 50;
-		}elseif($w < 200 && $h < 200 ){
-			$quality = 80;
+		@ImageCopyResampled ($thumb, $im, 0, 0, $src_x, $src_y, $w, $h, $sw, $sh);
+	
+		if($thumb != ''){
+				if($imgInfo[2] == IMAGETYPE_JPEG){
+					imagejpeg($thumb, $imgPath , 100);
+				}elseif($imgInfo[2] == IMAGETYPE_GIF){
+					imagegif($thumb, $imgPath);
+				}elseif($imgInfo[2] == IMAGETYPE_PNG){
+					imagepng($image_p, $imgPath, 9);
+				}
 		}
-		*/
-		//saving to a file
-		if($thumb != '')
-			imagejpeg($thumb,$imgPath , $quality);
+			
 		// Free up memory
 		imagedestroy($thumb);
 	}
