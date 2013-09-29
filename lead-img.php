@@ -31,7 +31,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	}
 	
 	//To save image on disk
-	$img_uri = getAmtyThumbCachePath() . $pid . "_" . $w . "_" . $h . ".jpg";
+	$img_uri = getAmtyThumbCachePath() . $pid . "_" . $w . "_" . $h;
 	
 	if($pid == -1 || !file_exists($img_uri)) { //for specific image resizging, caching is not required. it'll be saved with -1 pid
 		//resize and save it with $img_uri name
@@ -39,7 +39,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	}
 	
 	//Actual image url
-	$resized_img = getAmtyThumbCacheURL() . $pid . "_" . $w . "_" . $h . ".jpg";
+	$resized_img = getAmtyThumbCacheURL() . $pid . "_" . $w . "_" . $h;
 	
 	if($img_url_only == "y"){
 		$out = $resized_img;
@@ -163,11 +163,11 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 	
 		if($thumb != ''){
 				if($imgInfo[2] == IMAGETYPE_JPEG){
-					imagejpeg($thumb, $imgPath , 100);
+					imagejpeg($thumb, $imgPath . ".jpg" , 100);
 				}elseif($imgInfo[2] == IMAGETYPE_GIF){
-					imagegif($thumb, $imgPath);
+					imagegif($thumb, $imgPath . ".gif");
 				}elseif($imgInfo[2] == IMAGETYPE_PNG){
-					imagepng($image_p, $imgPath, 9);
+					imagepng($image_p, $imgPath . ".png", 9);
 				}
 		}
 			

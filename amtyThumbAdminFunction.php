@@ -35,8 +35,8 @@ function amty_testPlugin($imgurl,$pid,$w,$h,$percent,$constrain,$zc){
 		$img = $imgurl;
 	}
 	//echo $img;
-	$img_uri = getAmtyThumbPluginPath() . "testimage.jpg";
-	$img_url = getAmtyThumbPluginURL() . "testimage.jpg";
+	$img_uri = getAmtyThumbPluginPath() . "testimage";
+	$img_url = getAmtyThumbPluginURL() . "testimage";
 	//echo $img_uri;
 	$starttime = time();
 	$endtime = time();
