@@ -39,7 +39,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	}
 	
 	//Actual image url
-	$resized_img = getAmtyThumbCacheURL() . $pid . "_" . $w . "_" . $h;
+	$resized_img = getAmtyThumbCacheURL() . $pid . "_" . $w . "_" . $h . getImageExtension($img);
 	
 	if($img_url_only == "y"){
 		$out = $resized_img;
@@ -50,6 +50,18 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	return $out;
 }//function end
 
+function getImageExtension($imgURL){
+	$imgInfo = @getimagesize($imgURL);
+	if($imgInfo[2] == IMAGETYPE_JPEG){
+		return ".jpg";
+	}elseif($imgInfo[2] == IMAGETYPE_GIF){
+		return ".gif";
+	}elseif($imgInfo[2] == IMAGETYPE_PNG){
+		return ".png";
+	}else{
+		return '';
+	}
+}
 
 function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 	// get image size of img
