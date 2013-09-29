@@ -1,5 +1,25 @@
 <?php
 
+function getAmtyThumbCachePath(){
+	$dir = WP_CONTENT_DIR . "/amtythumbcache/";
+	if (!file_exists($dir)) {
+		mkdir($dir, 0755, true);
+	}
+	return $dir;
+}
+
+function getAmtyThumbPluginURL(){
+	return WP_PLUGIN_URL . "/amtythumb/";
+}
+
+function getAmtyThumbPluginPath(){
+	return WP_PLUGIN_DIR . "/amtythumb/";
+}
+
+function getAmtyThumbCacheURL(){
+	$dir = WP_CONTENT_URL . "/amtythumbcache/";
+}
+
 //empty image cache and all thumbnails from file system
 function amty_clearImageCacheSoft(){
 	$query = new WP_Query( 'posts_per_page=-1' );
@@ -10,10 +30,9 @@ function amty_clearImageCacheSoft(){
 }
 
 function amty_clearImageCacheHard(){
-	$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-	if($handle=opendir($dir)){
+	if($handle=opendir(getAmtyThumbCachePath())){
 		while ( ($file = readdir($handle)) !==false) {
-			@unlink($dir.'/'.$file);
+			@unlink(getAmtyThumbCachePath().$file);
 		}
 		closedir($handle);
 	}
@@ -28,11 +47,10 @@ function amty_clearImageCacheFull(){
 //delete an image from cache and its all thumbnails from file system
 function amty_deletePostFromCache($postId){
 	if(get_post_meta($postId,'amtyThumb',true) != '' ){
-		$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-		if($handle=opendir($dir)){
+		if($handle=opendir(getAmtyThumbCachePath())){
 			while ( ($file = readdir($handle)) !==false) {
 				if(preg_match('/^'. $postId .'_.*\.jpg/', $file)){
-					@unlink($dir.'/'.$file);
+					@unlink(getAmtyThumbCachePath().$file);
 				}
 			}
 			closedir($handle);
@@ -53,10 +71,10 @@ function amty_putIntoImageCache($postId,$force=0,$default_img=''){
 				$img = $default_img;
 			}
 			else{
-				$img = WP_PLUGIN_URL . "/amtythumb/amtytextthumb.gif";
+				$img = getAmtyThumbPluginURL(). "amtytextthumb.gif";
 			}
 		}elseif(!isImage($img)){//image is not valid
-			$img = WP_PLUGIN_URL . "/amtythumb/invalid.gif";
+			$img = getAmtyThumbPluginURL(). "invalid.gif";
 		}
 		update_post_meta($postId,'amtyThumb',$img);
 	}
@@ -69,6 +87,21 @@ function amty_populateCache($force=0){
 		amty_putIntoImageCache(get_the_ID(),$force);
 	endwhile;
 	wp_reset_postdata();
+}
+
+function amty_populateCacheAllManual($w,$h,$c,$zc){
+	$query = new WP_Query( 'posts_per_page=-1' );
+	print "caching for : ";
+	while ( $query->have_posts() ) : $query->the_post();
+		print $pid .",";
+		$pid = get_the_ID();
+		amty_lead_img($w,$h,$c,'','',$zc,$pid,'','');
+	endwhile;
+	wp_reset_postdata();
+}
+
+function amty_populateCacheManual($w,$h,$c,$zc,$pid){
+	amty_lead_img($w,$h,$c,'','',$zc,$pid,'','');
 }
 
 //empty current acche and repopulate it for all posts
@@ -87,6 +120,18 @@ function amty_getImageCacheCount(){
 	endwhile;
 	wp_reset_postdata();
 	return $cnt;
+}
+
+function amty_getFilesInCacheFolder(){
+	$count = 0; 
+    $dir = getAmtyThumbCachePath();
+    if ($handle = opendir($dir)) {
+        while (($file = readdir($handle)) !== false){
+            if (!in_array($file, array('.', '..')) && !is_dir($dir.$file)) 
+                $count++;
+        }
+    }
+	return $count;
 }
 
 function reportBrokenImage(){

@@ -8,8 +8,8 @@ function amty_displayThumb($postid){
 	}
 	echo '</div>';
 	echo '<div style="float:left;width:50%;">';
-	$dir = WP_PLUGIN_DIR . "/amtythumb/cache";
-	$url =  WP_PLUGIN_URL . "/amtythumb/cache";
+	$dir = getAmtyThumbCachePath();
+	$url =  getAmtyThumbCacheURL();
 	echo "<br />Image path on server : " . $dir;
 	echo "<br />Image url : " . $url;
 	echo "<br />Images cached on File system";
@@ -35,8 +35,8 @@ function amty_testPlugin($imgurl,$pid,$w,$h,$percent,$constrain,$zc){
 		$img = $imgurl;
 	}
 	//echo $img;
-	$img_uri = WP_PLUGIN_DIR . "/amtythumb/testimage.jpg";
-	$img_url = WP_PLUGIN_URL . "/amtythumb/testimage.jpg";
+	$img_uri = getAmtyThumbPluginPath() . "testimage.jpg";
+	$img_url = getAmtyThumbPluginURL() . "testimage.jpg";
 	//echo $img_uri;
 	$starttime = time();
 	$endtime = time();

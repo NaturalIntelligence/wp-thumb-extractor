@@ -26,12 +26,12 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 		$img = get_post_meta($pid,'amtyThumb',true);
 	}else{
 		if(isImage($img)){//to avoid invalid path or 404 errors
-			$img = WP_PLUGIN_URL . "/amtythumb/invalid.gif";
+			$img = getAmtyThumbPluginURL() . "invalid.gif";
 		}
 	}
 	
 	//To save image on disk
-	$img_uri = WP_PLUGIN_DIR . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
+	$img_uri = getAmtyThumbCachePath() . $pid . "_" . $w . "_" . $h . ".jpg";
 	
 	if($pid == -1 || !file_exists($img_uri)) { //for specific image resizging, caching is not required. it'll be saved with -1 pid
 		//resize and save it with $img_uri name
@@ -39,7 +39,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	}
 	
 	//Actual image url
-	$resized_img = WP_PLUGIN_URL . "/amtythumb/cache/". $pid . "_" . $w . "_" . $h . ".jpg";
+	$resized_img = getAmtyThumbCacheURL() . $pid . "_" . $w . "_" . $h . ".jpg";
 	
 	if($img_url_only == "y"){
 		$out = $resized_img;

@@ -4,7 +4,7 @@ Donate link: http://thinkzarahatke.com/
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 3.2.0
+Stable tag: 4.0.0
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -93,6 +93,11 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
+= 4.0.0 =
+* cache outside plugin folder. So your cache doesnt get empty on plugin update
+* offline cache - You can rebuild cache for all or particular posts directly through option page. It saves client response time for posts which are not cached yet.
+* HTML design fix amty thumb option page.
+
 = 3.2.0 =
 * improved quality of PNG and GIF files resizing
 
@@ -136,11 +141,13 @@ For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
 
 == Upgrade Notice ==
 
+= 4.0.0 =
+* cache outside plugin folder. So your cache doesnt get empty on plugin update
+* offline cache - You can rebuild cache for all or particular posts directly through option page. It saves client response time for posts which are not cached yet.
+* HTML design fix amty thumb option page.
+
 = 3.2.0 =
 * improved quality of PNG and GIF files resizing
-
-= 3.1.1 =
-* direct recache link.
 
 = 3.0.1 =
 * fixed a bug when it tries to resize invalid or broken images
