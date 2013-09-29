@@ -17,7 +17,7 @@ function getAmtyThumbPluginPath(){
 }
 
 function getAmtyThumbCacheURL(){
-	$dir = WP_CONTENT_URL . "/amtythumbcache/";
+	return WP_CONTENT_URL . "/amtythumbcache/";
 }
 
 //empty image cache and all thumbnails from file system
