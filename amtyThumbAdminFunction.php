@@ -35,12 +35,14 @@ function amty_testPlugin($imgurl,$pid,$w,$h,$percent,$constrain,$zc){
 		$img = $imgurl;
 	}
 	//echo $img;
-	$img_uri = getAmtyThumbPluginPath() . "testimage";
-	$img_url = getAmtyThumbPluginURL() . "testimage";
+	$ext = getImageExtension($img);
+	$img_uri = getAmtyThumbPluginPath() . "testimage" . $ext;
+	$img_url = getAmtyThumbPluginURL() . "testimage" . $ext;
 	//echo $img_uri;
 	$starttime = time();
 	$endtime = time();
 	@unlink($img_uri);
+	
 	@resizeImg($img,$percent,$constrain,$w,$h,$zc,$img_uri);
 	echo "<br />Time to resize image: " . ($endtime - $starttime);
 	
