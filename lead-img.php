@@ -180,7 +180,7 @@ function resizeImg($img,$percent,$constrain,$w,$h,$zc,$imgPath){
 				}elseif($imgInfo[2] == IMAGETYPE_GIF){
 					imagegif($thumb, $imgPath );
 				}elseif($imgInfo[2] == IMAGETYPE_PNG){
-					imagepng($image_p, $imgPath, 9);
+					imagepng($thumb, $imgPath, 9);
 				}
 		}
 			
