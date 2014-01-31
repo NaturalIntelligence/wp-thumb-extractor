@@ -62,7 +62,7 @@ function amty_deletePostFromCache($postId){
 //if force != 0 put 1st image of the post into cache even if presents.
 function amty_putIntoImageCache($postId,$force=0,$default_img=''){
 	$metaVal = get_post_meta($postId,'amtyThumb',true);
-	$imgExt = 'gif';
+	$imgExt = '.gif';
 	if($force == 0 && $metaVal != ''){
 		//do nothing
 	}else{
@@ -79,7 +79,7 @@ function amty_putIntoImageCache($postId,$force=0,$default_img=''){
 			$imgExt = getImageExtension($img);
 			if($imgExt != ''){
 				$imageString = file_get_contents($img);
-				$img = getAmtyThumbCachePath() . $postId . "." . $imgExt;
+				$img = getAmtyThumbCachePath() . $postId . $imgExt;
 				file_put_contents($img,$imageString);
 			}else{
 				$img = getAmtyThumbPluginURL(). "invalid.gif";
