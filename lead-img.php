@@ -13,6 +13,7 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 	
 	$pid=-1;
 	//$img_uri='';
+	$imgExt = '';
 	if($img == ''){
 		if($post_id == ''){
 			global $id;
@@ -24,13 +25,14 @@ function amty_lead_img($w='',$h='',$constrain='',$img='',$percent='',$zc='',$pos
 		//put valid or default image into cache
 		amty_putIntoImageCache($pid,0,$default_img);
 		$img = get_post_meta($pid,'amtyThumb',true);
+		$imgExt = get_post_meta($pid,'amtyThumbExt',true);
 	}else{
 		if(isImage($img)){//to avoid invalid path or 404 errors
 			$img = getAmtyThumbPluginURL() . "invalid.gif";
 		}
 	}
 	
-	$imgExt = getImageExtension($img);
+	//$imgExt = getImageExtension($img);
 	//To save image on disk
 	$img_uri = getAmtyThumbCachePath() . $pid . "_" . $w . "_" . $h . $imgExt;
 	

@@ -62,21 +62,31 @@ function amty_deletePostFromCache($postId){
 //if force != 0 put 1st image of the post into cache even if presents.
 function amty_putIntoImageCache($postId,$force=0,$default_img=''){
 	$metaVal = get_post_meta($postId,'amtyThumb',true);
+	$imgExt = 'gif';
 	if($force == 0 && $metaVal != ''){
 		//do nothing
 	}else{
 		$img = amty_take_first_img_by_id($postId);
 		if($img ==''){//image not present
 			if($default_img != ''){//custom default image
+				$imgExt = getImageExtension($default_img);
 				$img = $default_img;
 			}
 			else{
 				$img = getAmtyThumbPluginURL(). "amtytextthumb.gif";
 			}
-		}elseif(!isImage($img)){//image is not valid
-			$img = getAmtyThumbPluginURL(). "invalid.gif";
+		}else{
+			$imgExt = getImageExtension($img);
+			if($imgExt != ''){
+				$imageString = file_get_contents($img);
+				$img = getAmtyThumbCachePath() . $postId . "." . $imgExt;
+				file_put_contents($img,$imageString);
+			}else{
+				$img = getAmtyThumbPluginURL(). "invalid.gif";
+			}
 		}
 		update_post_meta($postId,'amtyThumb',$img);
+		update_post_meta($postId,'amtyThumbExt',$imgExt);
 	}
 }
 
