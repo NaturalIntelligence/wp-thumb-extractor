@@ -1,10 +1,10 @@
 === amtyThumb ===
 Contributors: Amit Gupta
-Donate link: http://thinkzarahatke.com/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KQJAX48SPUKNC
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
 Tested up to: 3.5
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -26,11 +26,15 @@ Features over other plugins:
 	e) Veoh
 4. You can use it to resize/crop an image instead of fetching it from any post.
 
-For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
-			[TZH](http://thinkzarahatke.com/ "amty thumb ")
-			
+visit [my post](https://articlestack.wordpress.com/2012/04/12/why-not-timthumb-but-amtythumb/)	
+
 
 Remember to pass default image path.
+
+*Note : I am pausing it's development for some time due to other priorities. However I'll keep supporting for any bug, small features, and any request.*
+
+You can know more about furhter releases, support, plans, and my other developments on [git](https://github.com/NaturalIntelligence).
+
 
 == Installation ==
 
@@ -49,7 +53,7 @@ To fetch image from specific post. Resize to half.
 To fetch image from current post. Resize by its width.(adjust height automatically)
 	[amtyThumbOnly width=50]
 
-For any doubt or query visit [article-stack](http://article-stack.com/ "amty thumb") or 
+For any doubt or query visit [wp-thumb-extractor](https://github.com/NaturalIntelligence/wp-thumb-extractor)
 
 Usage examples:
 
@@ -84,13 +88,9 @@ use getAmtyThumbRecacheLink($pid) somewhere in your theme.
 == Frequently Asked Questions ==
 
 
-For more queries visit [article-stack](http://article-stack.com/ "amty thumb")
+For any doubt or query visit [wp-thumb-extractor](https://github.com/NaturalIntelligence/wp-thumb-extractor)
 
 
-== Screenshots ==
-
-For live example visit [article-stack](http://article-stack.com/ "amty thumb ")
-			[THZ](http://thinkzarahatke.com/ "amty thumb ")
 == Changelog ==
 
 = 4.1.2 =
