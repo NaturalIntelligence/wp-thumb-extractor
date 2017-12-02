@@ -3,8 +3,8 @@ Contributors: Amit Gupta
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KQJAX48SPUKNC
 Tags: thumbnail, amty, image, first-image, Youtube, Vimeo, Dailymotion, Metacafe, Veoh
 Requires at least: 2.5
-Tested up to: 3.5
-Stable tag: 4.1.3
+Tested up to: 4.9.1
+Stable tag: 4.2.0
 
 Fetch first image of a post and Resize it. Otherwise resize an image.
 
@@ -92,6 +92,9 @@ For any doubt or query visit [wp-thumb-extractor](https://github.com/NaturalInte
 
 
 == Changelog ==
+
+= 4.2.0 =
+* Restrict direct access of admin page
 
 = 4.1.2 =
 * bug fix : there were 2 dots before file extension
