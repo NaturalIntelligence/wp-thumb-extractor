@@ -1,3 +1,7 @@
+<?php if ( ! defined( 'ABSPATH' ) )
+     exit;
+?>
+
 <?php 
 	if($_POST['amty_hidden'] == 'Y') {
 		//Form data sent
